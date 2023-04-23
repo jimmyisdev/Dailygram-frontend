@@ -68,13 +68,13 @@ const authSlice = createSlice({
 
 export const loginUser = createAsyncThunk("auth/loginUser", (values) => {
   return axios
-    .post("/api/v1/user/login", values, axiosConfigHeaders)
+    .post("https://dailygram2023-api.onrender.com/api/v1/user/login", values, axiosConfigHeaders)
     .then((response) => response.data);
 });
 
 export const signupUser = createAsyncThunk("auth/signupUser", (values) => {
   return axios
-    .post("/api/v1/user/signup", values, axiosConfigHeaders)
+    .post("https://dailygram2023-api.onrender.com/api/v1/user/signup", values, axiosConfigHeaders)
     .then((response) => response.data);
 });
 
