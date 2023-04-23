@@ -12,17 +12,16 @@ import { setLogin } from "redux/slices/authSlice";
 
 function App() {
   const dispatch = useDispatch();
-  // const isAuth = Boolean(useSelector((state) => state.auth.token));
-  const isAuth = true;
+  const isAuth = Boolean(useSelector((state) => state.auth.token));
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(setLogin());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (isAuth) navigate(-2);
-  // }, [isAuth]);
+  useEffect(() => {
+    if (isAuth) navigate(-2);
+  }, [isAuth]);
 
   return (
     <div className="App">
