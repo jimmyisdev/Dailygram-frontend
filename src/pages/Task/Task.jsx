@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Paper,
-  Typography,
-  Box,
-  LinearProgress,
-} from "@mui/material";
+import { Paper, Typography, Box, LinearProgress } from "@mui/material";
 import ItemTable from "components/Tables/ItemTable";
 
 import TaskForm from "./TaskForm";
@@ -13,6 +8,7 @@ import { getAllTasks } from "redux/slices/taskSlice";
 import { TASK_HEADS, TASK_ROW } from "components/Tables/rowFields";
 import PopupDialog from "components/Dialog/PopupDialog";
 import PageHead from "components/PageHead/PageHead";
+import TaskFilter from "./TaskFilter";
 
 export default function Task() {
   const dispatch = useDispatch();
@@ -22,7 +18,7 @@ export default function Task() {
   const handleAddModalOpen = () => setIsAddModalOpen(true);
   const handleAddModalClose = () => setIsAddModalOpen(false);
   useEffect(() => {
-    Boolean(token) && dispatch(getAllTasks());
+    Boolean(token) && dispatch(getAllTasks(""));
   }, [dispatch, token]);
 
   return (
@@ -40,6 +36,7 @@ export default function Task() {
       <PopupDialog handleClose={handleAddModalClose} status={isAddModalOpen}>
         <TaskForm actionType="create" />
       </PopupDialog>
+      {!isLoading && <TaskFilter />}
       {!isLoading && (
         <Typography
           gutterBottom
@@ -47,14 +44,14 @@ export default function Task() {
             marginTop: "1rem",
           }}
         >
-          {list.length > 0
-            ? `You have ${list.length} tasks.`
+          {list?.length > 0
+            ? `You have ${list?.length} tasks.`
             : "You do not have a task."}
         </Typography>
       )}
       <Box>
         {isLoading && <LinearProgress />}
-        {!isLoading && list.length > 0 && (
+        {!isLoading && list?.length > 0 && (
           <ItemTable
             dataType="task"
             tableData={list}
@@ -62,6 +59,7 @@ export default function Task() {
             tableHead={TASK_HEADS}
           />
         )}
+
         {!isLoading && error && <Typography>{error}</Typography>}
       </Box>
     </Paper>

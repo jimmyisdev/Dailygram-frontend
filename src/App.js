@@ -1,62 +1,44 @@
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import "./styles/global.css";
+import PrivateRoutes from "pages/PrivateRoutes/PrivateRoutes";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Expenditure from "./pages/Expenditure/Expenditure";
 import Task from "./pages/Task/Task";
 import PeopleMemo from "./pages/PeopleMemo/PeopleMemo";
 import NotFound from "./pages/NotFound/NotFound";
-import { useDispatch, useSelector } from "react-redux";
-import Navbar from "./components/Navbar/Navbar";
 import AuthPage from "pages/AuthPage/AuthPage";
-import { useEffect } from "react";
 import { setLogin } from "redux/slices/authSlice";
+import Layout from "pages/Layout/Layout";
 
 function App() {
   const dispatch = useDispatch();
   const isAuth = Boolean(useSelector((state) => state.auth.token));
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(setLogin());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (isAuth) navigate(-2);
-  }, [isAuth]);
-
   return (
     <div className="App">
-      {/* <BrowserRouter> */}
-      {isAuth && <Navbar />}
-      <div className="pages">
-        <Routes>
-          <Route
-            path="/"
-            element={isAuth ? <Dashboard /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/expenditure"
-            element={isAuth ? <Expenditure /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/task"
-            element={isAuth ? <Task /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/peopleMemo"
-            element={isAuth ? <PeopleMemo /> : <Navigate to="/login" />}
-          />
-          <Route path="*" element={<NotFound />} />
-          <Route
-            path="/login"
-            element={!isAuth ? <AuthPage type="login" /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/signup"
-            element={!isAuth ? <AuthPage type="signup" /> : <Navigate to="/" />}
-          />
-        </Routes>
-      </div>
-      {/* </BrowserRouter> */}
+      <Routes>
+        {isAuth ? (
+          <Route element={<Layout />}>
+            <Route index path="/" element={<Dashboard />} exact />
+            <Route path="/expenditure" element={<Expenditure />} />
+            <Route path="/task" element={<Task />} />
+            <Route path="/peopleMemo" element={<PeopleMemo />} />
+            <Route path="/*" element={<NotFound />} />
+          </Route>
+        ) : (
+          <>
+            <Route path="/login" element={<AuthPage type="login" />} />
+            <Route path="/signup" element={<AuthPage type="signup" />} />
+            <Route path="*" element={<AuthPage type="login" />} />
+          </>
+        )}
+      </Routes>
     </div>
   );
 }

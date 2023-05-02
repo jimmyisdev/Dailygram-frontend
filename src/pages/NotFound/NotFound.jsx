@@ -1,8 +1,16 @@
 import { Paper, Typography } from "@mui/material";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function NotFound() {
+export default function NotFound({ type }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  }, [type, navigate]);
+
   return (
     <Paper
       style={{
@@ -17,7 +25,6 @@ export default function NotFound() {
     >
       <Typography>404</Typography>
       <Typography>Sorry, this page does not exist</Typography>
-      <Link to="/">Go Back</Link>
     </Paper>
   );
 }

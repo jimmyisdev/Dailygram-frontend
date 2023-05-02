@@ -9,7 +9,7 @@ const initialState = {
   error: null,
 };
 
-export const getAllTasks = createAsyncThunk("task/getAllTasks", () => {
+export const getAllTasks = createAsyncThunk("task/getAllTasks", (url) => {
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const axiosConfig = {
     headers: {
@@ -17,7 +17,7 @@ export const getAllTasks = createAsyncThunk("task/getAllTasks", () => {
     },
   };
   return axios
-    .get(TASKS_API, axiosConfig)
+    .get(`${TASKS_API}${url}`, axiosConfig)
     .then((response) => response.data.tasks);
 });
 
@@ -73,6 +73,7 @@ const taskSlices = createSlice({
       .addCase(getAllTasks.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
+        state.list = [];
       })
 
       //handle create item

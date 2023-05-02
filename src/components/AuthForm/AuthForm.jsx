@@ -7,8 +7,7 @@ import {
   initialValuesLogin,
 } from "../../schema/formInitialValueSchema";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signupUser, loginUser } from "redux/slices/authSlice";
 
 const signupValidator = yup.object().shape({
@@ -23,11 +22,15 @@ const loginValidator = yup.object().shape({
 
 const AuthForm = ({ type }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { isLoading, error } = useSelector((state) => state.auth);
   const handleFormSubmit = async (values) => {
     type.toLowerCase() === "signup"
       ? await dispatch(signupUser(values))
-      : await dispatch(loginUser(values));
+      : await dispatch(loginUser(values)).then(() => {
+          navigate("/", { replace: true });
+        });
   };
 
   return (
@@ -90,9 +93,7 @@ const AuthForm = ({ type }) => {
                 helperText="Please enter your password"
               />
               {errors.name && <div id="feedback">{errors.name}</div>}
-              <Button type="submit">
-                {isLoading ? "Loading..." : "Submit"}
-              </Button>
+              <Button type="submit">Submit</Button>
             </Stack>
           </Form>
         )}

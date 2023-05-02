@@ -1,4 +1,4 @@
-import {  Paper, Typography, Stack } from "@mui/material";
+import { Paper, Typography, Stack } from "@mui/material";
 import AuthForm from "components/AuthForm/AuthForm";
 
 export default function AuthPage({ type }) {
@@ -28,18 +28,18 @@ export default function AuthPage({ type }) {
           Dailygram
         </Typography>
         <Typography
-            gutterBottom
-            variant="subtitle2"
-            sx={{
-                fontSize: "1.5rem",
-                color: "white",
-                fontWeight: 700,
-            }}
+          gutterBottom
+          variant="subtitle2"
+          sx={{
+            fontSize: "1.5rem",
+            color: "white",
+            fontWeight: 700,
+          }}
         >
-            Manage all your tasks, costs & friends in ONE App
+          Manage all your daily task, expenditure & connection in ONE App
         </Typography>
-        </Stack>
-        <AuthForm type={type} />
+      </Stack>
+      <AuthForm type={type} />
     </Paper>
   );
 }

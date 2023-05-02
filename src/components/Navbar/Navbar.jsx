@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Tooltip, List, Button, Box, ListItem } from "@mui/material";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import GroupIcon from "@mui/icons-material/Group";
@@ -11,7 +11,12 @@ import { setLogout } from "redux/slices/authSlice";
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isAuth = Boolean(useSelector((state) => state.auth.token));
+  function handleLogout(){
+    dispatch(setLogout())
+    navigate("/login");
+  }
 
   return (
     <header>
@@ -25,7 +30,7 @@ export default function Navbar() {
       >
         {isAuth && (
           <Tooltip title="Logout" arrow>
-            <Button onClick={() => dispatch(setLogout())}>
+            <Button onClick={handleLogout}>
               <LogoutIcon fontSize="large" color="action" />
             </Button>
           </Tooltip>
@@ -39,31 +44,51 @@ export default function Navbar() {
               }}
             >
               <ListItem>
-                <Link to="/">
+                <NavLink
+                  to="/"
+                  style={({ isActive }) =>
+                    isActive ? { color: "red" } : { color: "black" }
+                  }
+                >
                   <Tooltip title="Dashboard" arrow>
-                    <SpaceDashboardIcon color="primary" fontSize="large" />
+                    <SpaceDashboardIcon fontSize="large" />
                   </Tooltip>
-                </Link>
+                </NavLink>
               </ListItem>
               <ListItem>
-                <Link to="/task">
+                <NavLink
+                  to="/task"
+                  style={({ isActive }) =>
+                    isActive ? { color: "red" } : { color: "black" }
+                  }
+                >
                   <Tooltip title="Manage your task and classify" arrow>
                     <FormatListBulletedIcon fontSize="large" />
                   </Tooltip>
-                </Link>
+                </NavLink>
               </ListItem>
               <ListItem>
-                <Link to="/expenditure">
+                <NavLink
+                  to="/expenditure"
+                  style={({ isActive }) =>
+                    isActive ? { color: "red" } : { color: "black" }
+                  }
+                >
                   <Tooltip title="Record all your expenditures" arrow>
                     <PaidIcon fontSize="large" />
                   </Tooltip>
-                </Link>
+                </NavLink>
               </ListItem>
               <ListItem>
                 <Tooltip title="Take a brief note of your new friend" arrow>
-                  <Link to="/peopleMemo">
+                  <NavLink
+                    to="/peopleMemo"
+                    style={({ isActive }) =>
+                      isActive ? { color: "red" } : { color: "black" }
+                    }
+                  >
                     <GroupIcon fontSize="large" />
-                  </Link>
+                  </NavLink>
                 </Tooltip>
               </ListItem>
             </List>

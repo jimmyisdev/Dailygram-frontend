@@ -1,6 +1,7 @@
 import axios from "axios";
 import { axiosConfigHeaders } from "utils/axiosConfig";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AUTH_API } from "utils/apiEndpoint";
 
 const initialState = {
   user: null,
@@ -13,17 +14,21 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setLogin: (state) => {
+      state.isLoading = true;
       const userInfo = JSON.parse(localStorage.getItem("user"));
       if (userInfo?.token) {
         const { email, name, role, token } = userInfo;
         state.user = { email: email, name: name, role: role };
         state.token = token;
+        state.isLoading= false
       }
     },
     setLogout: (state) => {
+      state.isLoading = true;
       localStorage.removeItem("user");
       state.user = null;
       state.token = null;
+      state.isLoading= false
     },
   },
   extraReducers(builder) {
@@ -68,13 +73,13 @@ const authSlice = createSlice({
 
 export const loginUser = createAsyncThunk("auth/loginUser", (values) => {
   return axios
-    .post("https://dailygram2023-api.onrender.com/api/v1/user/login", values, axiosConfigHeaders)
+    .post(`${AUTH_API}/login`, values, axiosConfigHeaders)
     .then((response) => response.data);
 });
 
 export const signupUser = createAsyncThunk("auth/signupUser", (values) => {
   return axios
-    .post("https://dailygram2023-api.onrender.com/api/v1/user/signup", values, axiosConfigHeaders)
+    .post(`${AUTH_API}/signup`, values, axiosConfigHeaders)
     .then((response) => response.data);
 });
 
