@@ -36,7 +36,7 @@ export default function Task() {
       <PopupDialog handleClose={handleAddModalClose} status={isAddModalOpen}>
         <TaskForm actionType="create" />
       </PopupDialog>
-      {!isLoading && <TaskFilter />}
+      <TaskFilter />
       {!isLoading && (
         <Typography
           gutterBottom

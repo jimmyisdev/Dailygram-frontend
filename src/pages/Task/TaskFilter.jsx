@@ -17,13 +17,14 @@ export default function TaskFilter() {
     (prevState, nextState) => ({ ...prevState, ...nextState }),
     {
       level: "",
-      status: "",
+      isCompleted: "",
     }
   );
   async function handelConfirmBtn() {
     let url = await queryString(state);
     dispatchRequest(getAllTasks(url));
   }
+
   return (
     <Stack spacing={{ xs: 1, sm: 2 }} direction="column">
       <FormControl sx={{ width: 300 }}>
@@ -34,26 +35,38 @@ export default function TaskFilter() {
           value={state.level}
           label="level"
           onChange={(e) => setState({ level: e.target.value })}
+          placeholder={state.level.toUpperCase()}
         >
+          <MenuItem value="all">All</MenuItem>
           <MenuItem value="normal">Normal</MenuItem>
           <MenuItem value="emergent">Emergent</MenuItem>
           <MenuItem value="unnecessary">Unnecessary</MenuItem>
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="status">Status</InputLabel>
+        <InputLabel id="isCompleted">Status</InputLabel>
         <Select
-          labelId="status"
-          id="status-select"
-          value={state.status}
+          labelId="isCompleted"
+          id="status-isCompleted"
+          value={state.isCompleted}
           label="status"
-          onChange={(e) => setState({ status: e.target.value })}
+          onChange={(e) => setState({ isCompleted: e.target.value })}
+          placeholder={state.isCompleted}
         >
-          <MenuItem value={1}>Done</MenuItem>
-          <MenuItem value={0}>Not yet</MenuItem>
+          <MenuItem value="all">All</MenuItem>
+          <MenuItem value="true">True</MenuItem>
+          <MenuItem value="false">False</MenuItem>
         </Select>
       </FormControl>
-      <Button onClick={handelConfirmBtn}>Confirm</Button>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+
+          handelConfirmBtn();
+        }}
+      >
+        Confirm
+      </Button>
     </Stack>
   );
 }
