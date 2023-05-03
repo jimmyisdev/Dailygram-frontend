@@ -18,7 +18,10 @@ export default function ItemTable({
   tableHead,
 }) {
   return (
-    <TableContainer sx={{ maxHeight: "550px" }} component={Paper}>
+    <TableContainer
+      sx={{ maxHeight: "400px", overflow: "auto" }}
+      component={Paper}
+    >
       <Table stickyHeader aria-label="simple table">
         <TableHead>
           <TableRow>

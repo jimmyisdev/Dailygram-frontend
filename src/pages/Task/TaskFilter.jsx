@@ -44,12 +44,12 @@ export default function TaskFilter() {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="isCompleted">Status</InputLabel>
+        <InputLabel id="isCompleted">Completed</InputLabel>
         <Select
           labelId="isCompleted"
           id="status-isCompleted"
           value={state.isCompleted}
-          label="status"
+          label="completed"
           onChange={(e) => setState({ isCompleted: e.target.value })}
           placeholder={state.isCompleted}
         >
@@ -58,15 +58,7 @@ export default function TaskFilter() {
           <MenuItem value="false">False</MenuItem>
         </Select>
       </FormControl>
-      <Button
-        onClick={(e) => {
-          e.preventDefault();
-
-          handelConfirmBtn();
-        }}
-      >
-        Confirm
-      </Button>
+      <Button onClick={handelConfirmBtn}>Confirm</Button>
     </Stack>
   );
 }
