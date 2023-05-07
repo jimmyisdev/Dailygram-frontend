@@ -21,7 +21,7 @@ export default function PeopleMemo() {
   const handleAddModalClose = () => setIsAddModalOpen(false);
 
   useEffect(() => {
-    Boolean(token) && dispatch(getAllPeopleMemos(token));
+    Boolean(token) && dispatch(getAllPeopleMemos(""));
   }, [token, dispatch]);
 
   return (

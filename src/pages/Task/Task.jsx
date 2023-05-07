@@ -59,7 +59,6 @@ export default function Task() {
             tableHead={TASK_HEADS}
           />
         )}
-
         {!isLoading && error && <Typography>{error}</Typography>}
       </Box>
     </Paper>

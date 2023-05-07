@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setLogout } from "./authSlice";
 import { EXPENDITURES_API } from "utils/apiEndpoint";
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   list: [],
@@ -11,7 +11,8 @@ const initialState = {
 
 export const getAllExpenditures = createAsyncThunk(
   "expenditure/getAllExpenditures",
-  () => {
+  async ({ rejectWithValue }) => {
+    console.log('11')
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -20,13 +21,17 @@ export const getAllExpenditures = createAsyncThunk(
     };
     return axios
       .get(EXPENDITURES_API, axiosConfig)
-      .then((response) => response.data.expenditures);
+      .then((response) => response.data.expenditures)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
 export const createExpenditure = createAsyncThunk(
   "expenditure/createExpenditure",
-  (values) => {
+  async (values, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -35,13 +40,17 @@ export const createExpenditure = createAsyncThunk(
     };
     return axios
       .post(EXPENDITURES_API, values, axiosConfig)
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
 export const updateExpenditure = createAsyncThunk(
   "expenditure/updateExpenditure",
-  (values) => {
+  async (values, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -50,13 +59,17 @@ export const updateExpenditure = createAsyncThunk(
     };
     return axios
       .put(`${EXPENDITURES_API}/${values._id}`, values, axiosConfig)
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
 export const deleteExpenditure = createAsyncThunk(
   "expenditure/deleteExpenditure",
-  (targetId) => {
+  async (targetId, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -65,7 +78,11 @@ export const deleteExpenditure = createAsyncThunk(
     };
     return axios
       .delete(`${EXPENDITURES_API}/${targetId}`, axiosConfig)
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
@@ -135,7 +152,7 @@ const expenditureSlice = createSlice({
       })
 
       //handle delete item
-      .addCase(deleteExpenditure.pending, (state, action) => {
+      .addCase(deleteExpenditure.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteExpenditure.fulfilled, (state, action) => {

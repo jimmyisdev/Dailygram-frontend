@@ -11,7 +11,7 @@ export default function AuthPage({ type }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        background: " linear-gradient(45deg, #fead06, #c00def)",
+        background: "linear-gradient(45deg, #fead06, #c00def)",
       }}
     >
       <Stack>
@@ -23,6 +23,8 @@ export default function AuthPage({ type }) {
             fontSize: "3rem",
             color: "white",
             fontWeight: 700,
+            paddingRight: "1rem",
+            paddingLeft: "1rem",
           }}
         >
           Dailygram
@@ -34,6 +36,8 @@ export default function AuthPage({ type }) {
             fontSize: "1.5rem",
             color: "white",
             fontWeight: 700,
+            paddingRight: "1rem",
+            paddingLeft: "1rem",
           }}
         >
           Manage all your daily task, expenditure & connection in ONE App
