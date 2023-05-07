@@ -15,12 +15,12 @@ const authSlice = createSlice({
   reducers: {
     setLogin: (state) => {
       state.isLoading = true;
-      const userInfo = JSON.parse(localStorage.getItem("user"));
-      if (userInfo?.token) {
+      if (localStorage.getItem("user") !== null) {
+        const userInfo = JSON.parse(localStorage.getItem("user"));
         const { email, name, role, token } = userInfo;
         state.user = { email: email, name: name, role: role };
         state.token = token;
-        state.isLoading= false
+        state.isLoading = false;
       }
     },
     setLogout: (state) => {
@@ -28,7 +28,7 @@ const authSlice = createSlice({
       localStorage.removeItem("user");
       state.user = null;
       state.token = null;
-      state.isLoading= false
+      state.isLoading = false;
     },
   },
   extraReducers(builder) {
@@ -45,9 +45,7 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.user = null;
-        state.token = null;
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 
@@ -56,32 +54,44 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(signupUser.fulfilled, (state, action) => {
+        state.isLoading = false;
         localStorage.setItem("user", JSON.stringify(action.payload));
         const { email, name, role, token } = action.payload;
         state.user = { email: email, name: name, role: role };
         state.token = token;
-        state.isLoading = false;
       })
       .addCase(signupUser.rejected, (state, action) => {
-        state.user = null;
-        state.token = null;
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       });
   },
 });
 
-export const loginUser = createAsyncThunk("auth/loginUser", (values) => {
-  return axios
-    .post(`${AUTH_API}/login`, values, axiosConfigHeaders)
-    .then((response) => response.data);
-});
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (values, { rejectWithValue }) => {
+    return axios
+      .post(`${AUTH_API}/login`, values, axiosConfigHeaders)
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
+  }
+);
 
-export const signupUser = createAsyncThunk("auth/signupUser", (values) => {
-  return axios
-    .post(`${AUTH_API}/signup`, values, axiosConfigHeaders)
-    .then((response) => response.data);
-});
+export const signupUser = createAsyncThunk(
+  "auth/signupUser",
+  async (values, { rejectWithValue }) => {
+    return axios
+      .post(`${AUTH_API}/signup`, values, axiosConfigHeaders)
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
+  }
+);
 
 export const { setLogin, setLogout } = authSlice.actions;
 export default authSlice.reducer;

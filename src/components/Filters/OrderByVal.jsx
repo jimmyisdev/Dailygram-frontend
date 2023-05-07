@@ -2,7 +2,7 @@ import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setOrderByPriceVal } from "redux/slices/expenditureSlice";
-export default function OrderByVal({}) {
+export default function OrderByVal() {
   const [orderByVal, setOrderByVal] = useState("");
   const dispatch = useDispatch();
   function handleSwitchChange(event) {
@@ -13,7 +13,7 @@ export default function OrderByVal({}) {
   return (
     <Box>
       <FormControl fullWidth>
-        <InputLabel id="price-order">Assign order</InputLabel>
+        <InputLabel id="price-order">Price order</InputLabel>
         <Select
           labelId="price-order"
           id="price-order"

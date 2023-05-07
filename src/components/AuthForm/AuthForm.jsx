@@ -1,5 +1,12 @@
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Card, TextField, Typography, Stack, Button } from "@mui/material";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import {
+  Card,
+  TextField,
+  Typography,
+  Stack,
+  Button,
+  LinearProgress,
+} from "@mui/material";
 
 import * as yup from "yup";
 import {
@@ -24,7 +31,7 @@ const AuthForm = ({ type }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading, error } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
   const handleFormSubmit = async (values) => {
     type.toLowerCase() === "signup"
       ? await dispatch(signupUser(values))
@@ -32,7 +39,6 @@ const AuthForm = ({ type }) => {
           navigate("/", { replace: true });
         });
   };
-
   return (
     <Card
       sx={{
@@ -51,49 +57,48 @@ const AuthForm = ({ type }) => {
         }
         validationSchema={type === "signup" ? signupValidator : loginValidator}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          setFieldValue,
-          resetForm,
-        }) => (
+        {({ errors, isSubmitting, handleBlur, handleChange, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <Stack>
               {type.toLowerCase() === "signup" && (
-                <TextField
-                  required
-                  id="name"
-                  label="User Name"
-                  onChange={handleChange}
-                  helperText="Please enter your user name"
-                  onBlur={handleBlur}
-                  value={values.name}
-                />
+                <>
+                  <Field
+                    required
+                    id="name"
+                    label="User Name"
+                    component={TextField}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    sx={{ marginBottom: ".25rem", marginTop: ".25rem" }}
+                  />
+                  <ErrorMessage component="span" name="name" />
+                </>
               )}
-              <TextField
+              <Field
                 required
                 id="email"
                 label="Email"
-                helperText="Please enter your valid email"
+                component={TextField}
                 onBlur={handleBlur}
-                value={values.email}
                 onChange={handleChange}
+                sx={{ marginBottom: ".25rem", marginTop: ".25rem" }}
               />
-              <TextField
+              <ErrorMessage component="span" name="email" />
+              <Field
                 required
                 id="password"
                 type="password"
                 label="password"
+                component={TextField}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                helperText="Please enter your password"
+                sx={{ marginBottom: ".25rem", marginTop: ".25rem" }}
               />
-              {errors.name && <div id="feedback">{errors.name}</div>}
-              <Button type="submit">Submit</Button>
+              <ErrorMessage component="span" name="password" />
+              {isSubmitting && <LinearProgress />}
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting" : "Submit"}
+              </Button>
             </Stack>
           </Form>
         )}

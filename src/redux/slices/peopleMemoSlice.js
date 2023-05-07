@@ -11,7 +11,7 @@ const initialState = {
 
 export const getAllPeopleMemos = createAsyncThunk(
   "peopleMemo/getAllPeopleMemos",
-  () => {
+  async ({ rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -20,13 +20,17 @@ export const getAllPeopleMemos = createAsyncThunk(
     };
     return axios
       .get(PEOPLEMEMO_API, axiosConfig)
-      .then((response) => response.data.peopleMemos);
+      .then((response) => response.data.peopleMemos)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
 export const createPeopleMemo = createAsyncThunk(
   "peopleMemo/createPeopleMemo",
-  (values) => {
+  async (values, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -35,13 +39,17 @@ export const createPeopleMemo = createAsyncThunk(
     };
     return axios
       .post(PEOPLEMEMO_API, values, axiosConfig)
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
 export const updatePeopleMemo = createAsyncThunk(
   "peopleMemo/updatePeopleMemo",
-  (values) => {
+  async (values, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -50,13 +58,17 @@ export const updatePeopleMemo = createAsyncThunk(
     };
     return axios
       .put(`${PEOPLEMEMO_API}/${values._id}`, values, axiosConfig)
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
 export const deletePeopleMemo = createAsyncThunk(
   "peopleMemo/deletePeopleMemo",
-  (targetId) => {
+  async (targetId, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -65,7 +77,11 @@ export const deletePeopleMemo = createAsyncThunk(
     };
     return axios
       .delete(`${PEOPLEMEMO_API}/${targetId}`, axiosConfig)
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
@@ -82,7 +98,7 @@ const peopleMemoSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getAllPeopleMemos.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 
@@ -95,7 +111,7 @@ const peopleMemoSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(createPeopleMemo.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 
@@ -113,7 +129,7 @@ const peopleMemoSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updatePeopleMemo.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 
@@ -127,7 +143,7 @@ const peopleMemoSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deletePeopleMemo.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 

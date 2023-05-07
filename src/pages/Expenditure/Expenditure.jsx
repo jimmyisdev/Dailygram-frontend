@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Button,
   Paper,
   Typography,
-  Tooltip,
   Box,
   LinearProgress,
 } from "@mui/material";
@@ -29,7 +27,7 @@ export default function Expenditure() {
   const handleAddModalClose = () => setIsAddModalOpen(false);
 
   useEffect(() => {
-    Boolean(token) && dispatch(getAllExpenditures());
+    Boolean(token) && dispatch(getAllExpenditures(""));
   }, [token, dispatch]);
 
   return (
