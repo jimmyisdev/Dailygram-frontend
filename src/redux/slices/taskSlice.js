@@ -9,69 +9,81 @@ const initialState = {
   error: null,
 };
 
-export const getAllTasks = createAsyncThunk("task/getAllTasks", async(url, { rejectWithValue }) => {
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  const axiosConfig = {
-    headers: {
-      Authorization: `Bearer ${userInfo.token}`,
-    },
-  };
-  return axios
-    .get(`${TASKS_API}${url}`, axiosConfig)
-    .then((response) => response.data.tasks)
-    .catch((error) => {
-      if (!error.response) throw error;
-      return rejectWithValue(error.response.data);
-    });
-});
+export const getAllTasks = createAsyncThunk(
+  "task/getAllTasks",
+  async (url, { rejectWithValue }) => {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    return axios
+      .get(`${TASKS_API}${url}`, axiosConfig)
+      .then((response) => response.data.tasks)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
+  }
+);
 
-export const createTask = createAsyncThunk("task/createTask",async (values, { rejectWithValue }) => {
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  const axiosConfig = {
-    headers: {
-      Authorization: `Bearer ${userInfo.token}`,
-    },
-  };
-  return axios
-    .post(TASKS_API, values, axiosConfig)
-    .then((response) => response.data)
-    .catch((error) => {
-      if (!error.response) throw error;
-      return rejectWithValue(error.response.data);
-    });
-});
+export const createTask = createAsyncThunk(
+  "task/createTask",
+  async (values, { rejectWithValue }) => {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    return axios
+      .post(TASKS_API, values, axiosConfig)
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
+  }
+);
 
-export const updateTask = createAsyncThunk("task/updateTask", async(values, { rejectWithValue }) => {
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  const axiosConfig = {
-    headers: {
-      Authorization: `Bearer ${userInfo.token}`,
-    },
-  };
-  return axios
-    .put(`${TASKS_API}/${values._id}`, values, axiosConfig)
-    .then((response) => response.data)
-    .catch((error) => {
-      if (!error.response) throw error;
-      return rejectWithValue(error.response.data);
-    });
-});
+export const updateTask = createAsyncThunk(
+  "task/updateTask",
+  async (values, { rejectWithValue }) => {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    return axios
+      .put(`${TASKS_API}/${values._id}`, values, axiosConfig)
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
+  }
+);
 
-export const deleteTask = createAsyncThunk("task/deleteTask",async (targetId, { rejectWithValue }) => {
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  const axiosConfig = {
-    headers: {
-      Authorization: `Bearer ${userInfo.token}`,
-    },
-  };
-  return axios
-    .delete(`${TASKS_API}/${targetId}`, axiosConfig)
-    .then((response) => response.data)
-    .catch((error) => {
-      if (!error.response) throw error;
-      return rejectWithValue(error.response.data);
-    });
-});
+export const deleteTask = createAsyncThunk(
+  "task/deleteTask",
+  async (targetId, { rejectWithValue }) => {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    return axios
+      .delete(`${TASKS_API}/${targetId}`, axiosConfig)
+      .then((response) => response.data)
+      .catch((error) => {
+        if (!error.response) throw error;
+        return rejectWithValue(error.response.data);
+      });
+  }
+);
 
 const taskSlices = createSlice({
   name: "task",
@@ -118,7 +130,7 @@ const taskSlices = createSlice({
         state.isLoading = false;
       })
       .addCase(updateTask.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 

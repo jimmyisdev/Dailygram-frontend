@@ -39,7 +39,7 @@ export default function PeopleMemo() {
       <PopupDialog handleClose={handleAddModalClose} status={isAddModalOpen}>
         <PeopleMemoForm actionType="create" />
       </PopupDialog>
-      {!isLoading && (
+      {!isLoading && !error && (
         <Typography
           gutterBottom
           sx={{

@@ -45,7 +45,7 @@ export default function Expenditure() {
       <PopupDialog handleClose={handleAddModalClose} status={isAddModalOpen}>
         <ExpenditureForm actionType="create" />
       </PopupDialog>
-      {!isLoading && (
+      {!isLoading && !error && (
         <Typography
           gutterBottom
           sx={{

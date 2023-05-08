@@ -37,7 +37,7 @@ export default function Task() {
         <TaskForm actionType="create" />
       </PopupDialog>
       <TaskFilter />
-      {!isLoading && (
+      {!isLoading && !error && (
         <Typography
           gutterBottom
           sx={{

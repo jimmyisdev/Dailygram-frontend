@@ -65,14 +65,12 @@ export default function PeopleMemoForm({ actionType, data }) {
                 id="name"
                 label="Person name"
                 onChange={handleChange}
-                helperText="Please enter your user name"
                 onBlur={handleBlur}
                 value={values.name}
               />
               <TextField
                 id="place"
                 label="Where"
-                helperText="Where did you meet"
                 onBlur={handleBlur}
                 value={values.place}
                 onChange={handleChange}
@@ -87,24 +85,10 @@ export default function PeopleMemoForm({ actionType, data }) {
               <TextField
                 id="description"
                 label="Description"
-                helperText="Please enter your description"
                 onBlur={handleBlur}
                 value={values.description}
                 onChange={handleChange}
               />
-              {/* <TextareaAutosize
-                id="description"
-                label="Description"
-                maxRows={5}
-                aria-label="maximum height"
-                onBlur={handleBlur}
-                // placeholder="Maximum 4 rows"
-                onChange={handleChange}
-                // defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                //     ut labore et dolore magna aliqua."
-                value={values.description}
-              /> */}
-
               <Button type="submit" fullWidth>
                 {isLoading ? "Loading..." : "Submit"}
               </Button>

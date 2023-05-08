@@ -11,8 +11,7 @@ const initialState = {
 
 export const getAllExpenditures = createAsyncThunk(
   "expenditure/getAllExpenditures",
-  async ({ rejectWithValue }) => {
-    console.log('11')
+  async (url,{ rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -115,7 +114,7 @@ const expenditureSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getAllExpenditures.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 
@@ -128,7 +127,7 @@ const expenditureSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(createExpenditure.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 
@@ -147,7 +146,7 @@ const expenditureSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateExpenditure.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 
@@ -161,7 +160,7 @@ const expenditureSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deleteExpenditure.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload.error;
         state.isLoading = false;
       })
 

@@ -18,7 +18,7 @@ import { createTask, updateTask } from "redux/slices/taskSlice";
 
 export default function TaskForm({ actionType, data }) {
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.task);
+  const { isLoading } = useSelector((state) => state.task);
   const initialVals = () =>
     actionType === "update" ? data : initialValuesTask;
 
@@ -67,7 +67,6 @@ export default function TaskForm({ actionType, data }) {
                   id="name"
                   label="New task"
                   onChange={handleChange}
-                  helperText="Please enter your user name"
                   onBlur={handleBlur}
                   value={values.name}
                 />
@@ -77,7 +76,6 @@ export default function TaskForm({ actionType, data }) {
                   required
                   id="description"
                   label="Description"
-                  helperText="Please enter your description"
                   onBlur={handleBlur}
                   value={values.description}
                   onChange={handleChange}
@@ -97,8 +95,8 @@ export default function TaskForm({ actionType, data }) {
                     />
                     <FormControlLabel
                       value="normal"
-                      control={<Radio />}
                       label="Normal"
+                      control={<Radio />}
                     />
                     <FormControlLabel
                       value="emergent"

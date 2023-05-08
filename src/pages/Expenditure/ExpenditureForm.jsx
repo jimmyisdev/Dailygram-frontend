@@ -56,15 +56,12 @@ export default function ExpenditureForm({ actionType, data }) {
                 id="name"
                 label="Item"
                 onChange={handleChange}
-                helperText="Please enter expenditure item"
                 onBlur={handleBlur}
                 value={values.name}
-                error
               />
               <TextField
                 id="description"
                 label="Description"
-                helperText="Please enter your description"
                 onBlur={handleBlur}
                 value={values.description}
                 onChange={handleChange}
@@ -73,11 +70,9 @@ export default function ExpenditureForm({ actionType, data }) {
                 required
                 id="price"
                 label="Price"
-                helperText="Please enter your price"
                 onBlur={handleBlur}
                 value={values.price}
                 onChange={handleChange}
-                error
               />
               <Button type="submit" fullWidth>
                 {isLoading ? "Loading..." : "Submit"}

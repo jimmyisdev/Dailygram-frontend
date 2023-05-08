@@ -1,16 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, lazy } from "react";
 import { Routes, Route, useNavigate, BrowserRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles/global.css";
 import PrivateRoutes from "pages/PrivateRoutes/PrivateRoutes";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Expenditure from "./pages/Expenditure/Expenditure";
-import Task from "./pages/Task/Task";
-import PeopleMemo from "./pages/PeopleMemo/PeopleMemo";
-import NotFound from "./pages/NotFound/NotFound";
 import AuthPage from "pages/AuthPage/AuthPage";
 import { setLogin } from "redux/slices/authSlice";
 import Layout from "pages/Layout/Layout";
+
+const Task = lazy(() => import('./pages/Task/Task'));
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+const Expenditure = lazy(() => import('./pages/Expenditure/Expenditure'));
+const PeopleMemo = lazy(() => import('./pages/PeopleMemo/PeopleMemo'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
 function App() {
   const dispatch = useDispatch();

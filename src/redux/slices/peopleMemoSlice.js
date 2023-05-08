@@ -11,7 +11,7 @@ const initialState = {
 
 export const getAllPeopleMemos = createAsyncThunk(
   "peopleMemo/getAllPeopleMemos",
-  async ({ rejectWithValue }) => {
+  async (url, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
