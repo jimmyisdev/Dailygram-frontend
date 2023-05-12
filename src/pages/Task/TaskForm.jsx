@@ -36,7 +36,7 @@ export default function TaskForm({ actionType, data }) {
         backgroundColor: "white",
       }}
     >
-      <Typography variant="h3" component="h1" align="center" gutterBottom>
+      <Typography variant="h5" component="h2" align="center" gutterBottom>
         Task
       </Typography>
       <Formik

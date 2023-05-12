@@ -35,8 +35,8 @@ export default function PeopleMemoForm({ actionType, data }) {
         backgroundColor: "white",
       }}
     >
-      <Typography variant="h3" component="h1" align="center" gutterBottom>
-        People Memo
+      <Typography variant="h5" component="h2" align="center" gutterBottom>
+        Add a new friend
       </Typography>
       <Formik
         initialValues={initialVals()}
@@ -63,14 +63,14 @@ export default function PeopleMemoForm({ actionType, data }) {
               <TextField
                 required
                 id="name"
-                label="Person name"
+                label="Friend Name"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.name}
               />
               <TextField
                 id="place"
-                label="Where"
+                label="Where did you meet?"
                 onBlur={handleBlur}
                 value={values.place}
                 onChange={handleChange}
@@ -84,7 +84,7 @@ export default function PeopleMemoForm({ actionType, data }) {
               />
               <TextField
                 id="description"
-                label="Description"
+                label="Add some details..."
                 onBlur={handleBlur}
                 value={values.description}
                 onChange={handleChange}

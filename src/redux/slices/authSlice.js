@@ -18,7 +18,7 @@ const authSlice = createSlice({
       if (localStorage.getItem("user") !== null) {
         const userInfo = JSON.parse(localStorage.getItem("user"));
         const { email, name, role, token } = userInfo;
-        state.user = { email: email, name: name, role: role };
+        state.user = { email, name, role };
         state.token = token;
         state.isLoading = false;
       }
@@ -54,11 +54,11 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(signupUser.fulfilled, (state, action) => {
-        state.isLoading = false;
         localStorage.setItem("user", JSON.stringify(action.payload));
         const { email, name, role, token } = action.payload;
         state.user = { email: email, name: name, role: role };
         state.token = token;
+        state.isLoading = false;
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.error = action.payload.error;

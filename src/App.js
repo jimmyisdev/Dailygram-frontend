@@ -7,11 +7,11 @@ import AuthPage from "pages/AuthPage/AuthPage";
 import { setLogin } from "redux/slices/authSlice";
 import Layout from "pages/Layout/Layout";
 
-const Task = lazy(() => import('./pages/Task/Task'));
-const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
-const Expenditure = lazy(() => import('./pages/Expenditure/Expenditure'));
-const PeopleMemo = lazy(() => import('./pages/PeopleMemo/PeopleMemo'));
-const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+const Task = lazy(() => import("./pages/Task/Task"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const Expenditure = lazy(() => import("./pages/Expenditure/Expenditure"));
+const PeopleMemo = lazy(() => import("./pages/PeopleMemo/PeopleMemo"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 function App() {
   const dispatch = useDispatch();

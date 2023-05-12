@@ -28,8 +28,8 @@ export default function ExpenditureForm({ actionType, data }) {
         backgroundColor: "white",
       }}
     >
-      <Typography variant="h3" component="h1" align="center" gutterBottom>
-        Expenditure
+      <Typography variant="h5" component="h2" align="center" gutterBottom>
+        Add an expenditure
       </Typography>
       <Formik
         initialValues={initialVals()}

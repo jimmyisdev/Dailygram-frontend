@@ -1,0 +1,20 @@
+.check_cat_section {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat_container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  object-fit: contain;
+  clip-path: circle(50% at 50% 50%);
+  background-color: black;
+}
