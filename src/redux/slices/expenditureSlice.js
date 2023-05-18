@@ -32,6 +32,7 @@ export const createExpenditure = createAsyncThunk(
   "expenditure/createExpenditure",
   async (values, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
+    console.log(userInfo.token)
     const axiosConfig = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,

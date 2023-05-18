@@ -5,7 +5,9 @@ import { AUTH_API } from "utils/apiEndpoint";
 
 const initialState = {
   user: null,
-  token: null,
+  token: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).token
+    : "",
   error: null,
   isLoading: false,
 };
@@ -14,13 +16,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setLogin: (state) => {
-      state.isLoading = true;
       if (localStorage.getItem("user") !== null) {
         const userInfo = JSON.parse(localStorage.getItem("user"));
         const { email, name, role, token } = userInfo;
         state.user = { email, name, role };
         state.token = token;
-        state.isLoading = false;
       }
     },
     setLogout: (state) => {

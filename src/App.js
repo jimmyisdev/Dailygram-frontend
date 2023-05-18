@@ -1,5 +1,5 @@
 import { useEffect, lazy } from "react";
-import { Routes, Route, useNavigate, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles/global.css";
 import PrivateRoutes from "pages/PrivateRoutes/PrivateRoutes";
@@ -25,21 +25,37 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {isAuth ? (
-            <Route element={<Layout />}>
+          <Route element={<Layout />}>
+            <Route path="" element={<PrivateRoutes />}>
               <Route index path="/" element={<Dashboard />} exact />
               <Route path="/expenditure" element={<Expenditure />} />
               <Route path="/task" element={<Task />} />
               <Route path="/peopleMemo" element={<PeopleMemo />} />
               <Route path="/*" element={<NotFound />} />
             </Route>
-          ) : (
-            <>
-              <Route path="/login" element={<AuthPage type="login" />} />
-              <Route path="/signup" element={<AuthPage type="signup" />} />
-              <Route path="*" element={<AuthPage type="login" />} />
-            </>
-          )}
+          </Route>
+          <Route
+            path="/login"
+            element={
+              isAuth ? <Navigate replace to={"/"} /> : <AuthPage type="login" />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              isAuth ? (
+                <Navigate replace to={"/"} />
+              ) : (
+                <AuthPage type="signup" />
+              )
+            }
+          />
+          <Route
+            path="*"
+            element={
+              isAuth ? <Navigate replace to={"/"} /> : <AuthPage type="login" />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
