@@ -6,6 +6,8 @@ import {
   Stack,
   Button,
   LinearProgress,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import * as yup from "yup";
@@ -16,6 +18,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signupUser, loginUser } from "redux/slices/authSlice";
+import { useEffect, useState } from "react";
 
 const signupValidator = yup.object().shape({
   name: yup.string().required("required"),
@@ -30,8 +33,8 @@ const loginValidator = yup.object().shape({
 const AuthForm = ({ type }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { error } = useSelector((state) => state.auth);
+  const [showSnackbar, setShowSnackbar] = useState(false);
   const handleFormSubmit = async (values) => {
     type.toLowerCase() === "signup"
       ? await dispatch(signupUser(values))
@@ -39,6 +42,17 @@ const AuthForm = ({ type }) => {
           navigate("/", { replace: true });
         });
   };
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
+
+  useEffect(() => {
+    error && setShowSnackbar(true);
+  }, [error]);
+
   return (
     <Card
       sx={{
@@ -103,7 +117,15 @@ const AuthForm = ({ type }) => {
           </Form>
         )}
       </Formik>
-      {error && <div className="error">{error}</div>}
+      {error && (
+        <Snackbar
+          autoHideDuration={3500}
+          open={showSnackbar}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert severity="error">{error}</Alert>
+        </Snackbar>
+      )}
       <Typography
         sx={{
           color: "black",
