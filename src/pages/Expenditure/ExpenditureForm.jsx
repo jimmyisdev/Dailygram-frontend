@@ -23,7 +23,7 @@ export default function ExpenditureForm({ actionType, data }) {
   return (
     <Card
       sx={{
-        width: 400,
+        width: 300,
         padding: "1rem",
         backgroundColor: "white",
       }}

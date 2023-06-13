@@ -8,7 +8,14 @@ import DetailsItem from "./Actions/DetailsItem";
 
 export default function ItemRow({ dataType, itemData, tableOrder }) {
   return (
-    <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+    <TableRow
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+        "&:hover": {
+          backgroundColor: "#F1F1F1",
+        },
+      }}
+    >
       {tableOrder.map((item) => {
         if (item === "level") {
           const clr = () => {

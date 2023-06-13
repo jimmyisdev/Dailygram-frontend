@@ -6,7 +6,10 @@ import { Button } from "@mui/material";
 
 export default function PopupDialog({ children, handleClose, status }) {
   return (
-    <Dialog aria-labelledby="customized-dialog-title" open={status}>
+    <Dialog
+      aria-labelledby="customized-dialog-title"
+      open={status}
+    >
       <DialogContent dividers>
         <Button onClick={handleClose}>
           <CloseIcon
