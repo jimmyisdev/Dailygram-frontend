@@ -35,42 +35,49 @@ export default function PeopleMemo() {
         background: " linear-gradient(45deg, #fead06, #c00def)",
       }}
     >
-      <PageHead pageTitle="People Memo" addFunc={handleAddModalOpen} />
-      <PopupDialog handleClose={handleAddModalClose} status={isAddModalOpen}>
-        <PeopleMemoForm actionType="create" />
-      </PopupDialog>
-      {!isLoading && !error && (
-        <Typography
-          gutterBottom
-          sx={{
-            marginTop: "1rem",
-          }}
-        >
-          {list.length > 0
-            ? `You have ${list.length} memo.`
-            : "You do not have a memo."}
-        </Typography>
-      )}
-      <Box>
-        {isLoading && <LinearProgress />}
-        {!isLoading && list.length > 0 && (
-          <ItemTable
-            dataType="people_memo"
-            tableData={list}
-            tableOrder={PEOPLE_MEMO_ROW}
-            tableHead={PEOPLE_MEMO_HEADS}
-          />
-        )}
-        {!isLoading && error && (
-          <Typography
-            sx={{
-              padding: "1rem",
-            }}
+      {isLoading && <LinearProgress />}
+      {!isLoading && (
+        <>
+          <PageHead pageTitle="People Memo" addFunc={handleAddModalOpen} />
+          <PopupDialog
+            handleClose={handleAddModalClose}
+            status={isAddModalOpen}
           >
-            {error}
-          </Typography>
-        )}
-      </Box>
+            <PeopleMemoForm actionType="create" />
+          </PopupDialog>
+          {!error && (
+            <Typography
+              gutterBottom
+              sx={{
+                marginTop: "1rem",
+              }}
+            >
+              {list.length > 0
+                ? `You have ${list.length} memo.`
+                : "You do not have a memo."}
+            </Typography>
+          )}
+          <Box>
+            {list.length > 0 && (
+              <ItemTable
+                dataType="people_memo"
+                tableData={list}
+                tableOrder={PEOPLE_MEMO_ROW}
+                tableHead={PEOPLE_MEMO_HEADS}
+              />
+            )}
+            {error && (
+              <Typography
+                sx={{
+                  padding: "1rem",
+                }}
+              >
+                {error}
+              </Typography>
+            )}
+          </Box>
+        </>
+      )}
     </Paper>
   );
 }

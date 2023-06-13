@@ -32,35 +32,42 @@ export default function Task() {
         background: " linear-gradient(45deg, #fead06, #c00def)",
       }}
     >
-      <PageHead pageTitle="Task" addFunc={handleAddModalOpen} />
-      <PopupDialog handleClose={handleAddModalClose} status={isAddModalOpen}>
-        <TaskForm actionType="create" />
-      </PopupDialog>
-      <TaskFilter />
-      {!isLoading && !error && (
-        <Typography
-          gutterBottom
-          sx={{
-            marginTop: "1rem",
-          }}
-        >
-          {list?.length > 0
-            ? `You have ${list?.length} tasks.`
-            : "You do not have a task."}
-        </Typography>
+      {isLoading && <LinearProgress />}
+      {!isLoading && (
+        <>
+          <PageHead pageTitle="Task" addFunc={handleAddModalOpen} />
+          <PopupDialog
+            handleClose={handleAddModalClose}
+            status={isAddModalOpen}
+          >
+            <TaskForm actionType="create" />
+          </PopupDialog>
+          <TaskFilter />
+          {!error && (
+            <Typography
+              gutterBottom
+              sx={{
+                marginTop: "1rem",
+              }}
+            >
+              {list?.length > 0
+                ? `You have ${list?.length} tasks.`
+                : "You do not have a task."}
+            </Typography>
+          )}
+          <Box>
+            {list?.length > 0 && (
+              <ItemTable
+                dataType="task"
+                tableData={list}
+                tableOrder={TASK_ROW}
+                tableHead={TASK_HEADS}
+              />
+            )}
+            {error && <Typography>{error}</Typography>}
+          </Box>
+        </>
       )}
-      <Box>
-        {isLoading && <LinearProgress />}
-        {!isLoading && list?.length > 0 && (
-          <ItemTable
-            dataType="task"
-            tableData={list}
-            tableOrder={TASK_ROW}
-            tableHead={TASK_HEADS}
-          />
-        )}
-        {!isLoading && error && <Typography>{error}</Typography>}
-      </Box>
     </Paper>
   );
 }

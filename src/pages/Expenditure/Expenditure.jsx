@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Paper,
-  Typography,
-  Box,
-  LinearProgress,
-} from "@mui/material";
+import { Paper, Typography, Box, LinearProgress } from "@mui/material";
 import ItemTable from "components/Tables/ItemTable";
 
 import ExpenditureForm from "./ExpenditureForm";
@@ -41,43 +36,52 @@ export default function Expenditure() {
         background: " linear-gradient(45deg, #fead06, #c00def)",
       }}
     >
-      <PageHead pageTitle="Expenditure" addFunc={handleAddModalOpen} />
-      <PopupDialog handleClose={handleAddModalClose} status={isAddModalOpen}>
-        <ExpenditureForm actionType="create" />
-      </PopupDialog>
-      {!isLoading && !error && (
-        <Typography
-          gutterBottom
-          sx={{
-            marginTop: "1rem",
-          }}
-        >
-          {list.length > 0
-            ? `You have ${list.length} expenditures.`
-            : "You do not have an expenditure."}
-        </Typography>
-      )}
-      <Box>
-        {isLoading && <LinearProgress />}
-        {!isLoading && list.length > 0 && <OrderByVal />}
-        {!isLoading && list.length > 0 && (
-          <ItemTable
-            dataType="expenditure"
-            tableData={list}
-            tableOrder={EXPENDITURE_ROW}
-            tableHead={EXPENDITURE_HEADS}
-          />
-        )}
-        {!isLoading && error && (
-          <Typography
-            sx={{
-              padding: "1rem",
-            }}
+      {isLoading && <LinearProgress />}
+      {!isLoading && (
+        <>
+          <PageHead pageTitle="Expenditure" addFunc={handleAddModalOpen} />
+          <PopupDialog
+            handleClose={handleAddModalClose}
+            status={isAddModalOpen}
           >
-            {error}
-          </Typography>
-        )}
-      </Box>
+            <ExpenditureForm actionType="create" />
+          </PopupDialog>
+          {!error && (
+            <Typography
+              gutterBottom
+              sx={{
+                marginTop: "1rem",
+              }}
+            >
+              {list.length > 0
+                ? `You have ${list.length} expenditures.`
+                : "You do not have an expenditure."}
+            </Typography>
+          )}
+          <Box>
+            {list.length > 0 && (
+              <>
+                <OrderByVal />
+                <ItemTable
+                  dataType="expenditure"
+                  tableData={list}
+                  tableOrder={EXPENDITURE_ROW}
+                  tableHead={EXPENDITURE_HEADS}
+                />
+              </>
+            )}
+            {error && (
+              <Typography
+                sx={{
+                  padding: "1rem",
+                }}
+              >
+                {error}
+              </Typography>
+            )}
+          </Box>
+        </>
+      )}
     </Paper>
   );
 }
