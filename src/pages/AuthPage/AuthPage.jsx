@@ -1,13 +1,5 @@
-import {
-  Paper,
-  Typography,
-  Stack,
-  Button,
-  DialogTitle,
-  Tooltip,
-} from "@mui/material";
+import { Paper, Typography, Stack, Button, DialogTitle } from "@mui/material";
 import AuthForm from "components/AuthForm/AuthForm";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import PopupDialog from "components/Dialog/PopupDialog";
 import { useState } from "react";
 
@@ -46,13 +38,6 @@ export default function AuthPage({ type }) {
           >
             Dailygram
           </Typography>
-          <Tooltip title="This is a full stack CRUD app. Please first register to try all features!">
-            <HelpOutlineIcon
-              sx={{
-                color: "white",
-              }}
-            />
-          </Tooltip>
         </Stack>
         <Typography
           gutterBottom

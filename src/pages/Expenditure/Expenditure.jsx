@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Paper, Typography, Box, LinearProgress } from "@mui/material";
+import { Paper, Typography, Box, LinearProgress, Stack } from "@mui/material";
 import ItemTable from "components/Tables/ItemTable";
 
 import ExpenditureForm from "./ExpenditureForm";
@@ -12,6 +12,7 @@ import {
 import PopupDialog from "components/Dialog/PopupDialog";
 import PageHead from "components/PageHead/PageHead";
 import OrderByVal from "components/Filters/OrderByVal";
+import AddNewItem from "components/AddNewItem/AddNewItem";
 
 export default function Expenditure() {
   const dispatch = useDispatch();
@@ -39,7 +40,10 @@ export default function Expenditure() {
       {isLoading && <LinearProgress />}
       {!isLoading && (
         <>
-          <PageHead pageTitle="Expenditure" addFunc={handleAddModalOpen} />
+          <Stack direction="row">
+            <PageHead pageTitle="Expenditure" />
+            <AddNewItem addFunc={handleAddModalOpen} />
+          </Stack>
           <PopupDialog
             handleClose={handleAddModalClose}
             status={isAddModalOpen}

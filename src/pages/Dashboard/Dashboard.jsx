@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import CheckCat from "components/CheckCat/CheckCat";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ export default function Dashboard() {
   return (
     <Paper
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         width: "100vw",
         display: "flex",
         flexDirection: "column",
@@ -34,7 +34,9 @@ export default function Dashboard() {
       >
         Hi {user.name}! Welcome back!
       </Typography>
-      <CheckCat />
+      <Stack>
+        <CheckCat />
+      </Stack>
     </Paper>
   );
 }

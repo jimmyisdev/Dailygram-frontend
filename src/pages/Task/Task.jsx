@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Paper, Typography, Box, LinearProgress } from "@mui/material";
+import { Paper, Typography, Box, LinearProgress, Stack } from "@mui/material";
 import ItemTable from "components/Tables/ItemTable";
 
 import TaskForm from "./TaskForm";
@@ -9,6 +9,7 @@ import { TASK_HEADS, TASK_ROW } from "components/Tables/rowFields";
 import PopupDialog from "components/Dialog/PopupDialog";
 import PageHead from "components/PageHead/PageHead";
 import TaskFilter from "./TaskFilter";
+import AddNewItem from "components/AddNewItem/AddNewItem";
 
 export default function Task() {
   const dispatch = useDispatch();
@@ -35,7 +36,10 @@ export default function Task() {
       {isLoading && <LinearProgress />}
       {!isLoading && (
         <>
-          <PageHead pageTitle="Task" addFunc={handleAddModalOpen} />
+          <Stack direction="row">
+            <PageHead pageTitle="Task" />
+            <AddNewItem addFunc={handleAddModalOpen} />
+          </Stack>
           <PopupDialog
             handleClose={handleAddModalClose}
             status={isAddModalOpen}

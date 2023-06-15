@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Paper, Typography, Box, LinearProgress } from "@mui/material";
+import { Paper, Typography, Box, LinearProgress, Stack } from "@mui/material";
 import ItemTable from "components/Tables/ItemTable";
 
 import PeopleMemoForm from "./PeopleMemoForm";
@@ -11,6 +11,7 @@ import {
 } from "components/Tables/rowFields";
 import PopupDialog from "components/Dialog/PopupDialog";
 import PageHead from "components/PageHead/PageHead";
+import AddNewItem from "components/AddNewItem/AddNewItem";
 
 export default function PeopleMemo() {
   const dispatch = useDispatch();
@@ -38,7 +39,10 @@ export default function PeopleMemo() {
       {isLoading && <LinearProgress />}
       {!isLoading && (
         <>
-          <PageHead pageTitle="People Memo" addFunc={handleAddModalOpen} />
+          <Stack direction="row">
+            <PageHead pageTitle="People Memo" />
+            <AddNewItem addFunc={handleAddModalOpen} />
+          </Stack>
           <PopupDialog
             handleClose={handleAddModalClose}
             status={isAddModalOpen}

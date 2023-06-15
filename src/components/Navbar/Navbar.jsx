@@ -4,6 +4,7 @@ import { Tooltip, List, Button, Box, ListItem } from "@mui/material";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import BuildIcon from "@mui/icons-material/Build";
 import PaidIcon from "@mui/icons-material/Paid";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -13,8 +14,8 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuth = Boolean(useSelector((state) => state.auth.token));
-  function handleLogout(){
-    dispatch(setLogout())
+  function handleLogout() {
+    dispatch(setLogout());
     navigate("/login");
   }
 
@@ -52,6 +53,18 @@ export default function Navbar() {
                 >
                   <Tooltip title="Dashboard" arrow>
                     <SpaceDashboardIcon fontSize="large" />
+                  </Tooltip>
+                </NavLink>
+              </ListItem>
+              <ListItem>
+                <NavLink
+                  to="/tool"
+                  style={({ isActive }) =>
+                    isActive ? { color: "red" } : { color: "black" }
+                  }
+                >
+                  <Tooltip title="Tools" arrow>
+                    <BuildIcon fontSize="large" />
                   </Tooltip>
                 </NavLink>
               </ListItem>

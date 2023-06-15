@@ -8,6 +8,7 @@ import { setLogin } from "redux/slices/authSlice";
 import Layout from "pages/Layout/Layout";
 
 const Task = lazy(() => import("./pages/Task/Task"));
+const Tool = lazy(() => import("./pages/Tool/Tool"));
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const Expenditure = lazy(() => import("./pages/Expenditure/Expenditure"));
 const PeopleMemo = lazy(() => import("./pages/PeopleMemo/PeopleMemo"));
@@ -16,7 +17,6 @@ const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 function App() {
   const dispatch = useDispatch();
   const isAuth = Boolean(useSelector((state) => state.auth.token));
-
   useEffect(() => {
     dispatch(setLogin());
   }, [dispatch]);
@@ -31,6 +31,7 @@ function App() {
               <Route path="/expenditure" element={<Expenditure />} />
               <Route path="/task" element={<Task />} />
               <Route path="/peopleMemo" element={<PeopleMemo />} />
+              <Route path="/tool" element={<Tool />} />
               <Route path="/*" element={<NotFound />} />
             </Route>
           </Route>
