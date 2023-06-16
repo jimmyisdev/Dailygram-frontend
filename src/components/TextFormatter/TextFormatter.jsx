@@ -54,7 +54,7 @@ export default function TextFormatter() {
           />
           <Stack>
             {porcessedText.map((item) => {
-              return <Typography>{item}</Typography>;
+              return <Typography key={item}>{item}</Typography>;
             })}
           </Stack>
           <Stack direction="row" spacing={2} justifyContent="space-between">

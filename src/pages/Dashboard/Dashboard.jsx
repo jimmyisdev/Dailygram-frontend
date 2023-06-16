@@ -32,7 +32,17 @@ export default function Dashboard() {
           fontWeight: 700,
         }}
       >
-        Hi {user.name}! Welcome back!
+        Hi {user.name}!
+      </Typography>
+      <Typography
+        component="h1"
+        sx={{
+          fontSize: "2rem",
+          color: "white",
+          fontWeight: 700,
+        }}
+      >
+        Welcome back!
       </Typography>
       <Stack>
         <CheckCat />
