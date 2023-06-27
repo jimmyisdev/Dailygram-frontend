@@ -1,18 +1,40 @@
-import { Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 
 export default function OrderBookDisplay({ data }) {
   const { asks, bids } = data;
   return (
-    <Stack direction="row">
-      <SingleOrderBookContainer title="ASKS" data={asks} />
-      <SingleOrderBookContainer title="BIDS" data={bids} />
+    <Stack>
+      <Typography
+        variant="h5"
+        sx={{
+          fontWeight: "900",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        Order Book Record
+      </Typography>
+      <Stack direction="row">
+        <SingleOrderBookContainer title="ASKS" data={asks} />
+        <SingleOrderBookContainer title="BIDS" data={bids} />
+      </Stack>
     </Stack>
   );
 }
 function SingleOrderBookContainer({ title, data }) {
   return (
     <Stack>
-      <Typography variant="h5">{title}</Typography>
+      <Typography
+        variant="h5"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {title}
+      </Typography>
       <Stack direction="row">
         <Stack
           sx={{
@@ -29,6 +51,7 @@ function SingleOrderBookContainer({ title, data }) {
           <Typography variant="h5">Quantity</Typography>
         </Stack>
       </Stack>
+      <Divider />
       <Stack>
         {data.map((item, index) => {
           return (

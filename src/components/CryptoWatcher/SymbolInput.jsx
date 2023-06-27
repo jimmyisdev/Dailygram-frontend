@@ -52,15 +52,17 @@ export default function SymbolInput() {
       <Stack ref={wrapperRef} className="search_area">
         <TextField
           id="currentSymbol"
-          label="Crypto Pair"
+          label="Trading Symbol"
           onChange={(e) => dispatch(selectSymbol(e.target.value))}
         />
-        <Button disabled={connected} onClick={handleConnectBtn}>
-          Connect
-        </Button>
-        <Button disabled={!connected} onClick={handleDisconnectBtn}>
-          Disconnect
-        </Button>
+        <Stack direction="row">
+          <Button disabled={connected} onClick={handleConnectBtn}>
+            Connect
+          </Button>
+          <Button disabled={!connected} onClick={handleDisconnectBtn}>
+            Disconnect
+          </Button>
+        </Stack>
         {display && (
           <div className="autoContainer">
             {!options.length && <span>No matched item</span>}

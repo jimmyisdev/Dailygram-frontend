@@ -34,10 +34,12 @@ export default function CryptoWatcher() {
         tradeTime = new Date(tradeTime).toLocaleTimeString();
         let tradePrice = data.p;
         let tradeQuantity = data.q;
+        let tradeSymbol = data.s;
         let singleTradeInfo = {
           currentPrice: tradePrice,
           currentQty: tradeQuantity,
           currentTradeTime: tradeTime,
+          currentTradeSymbol: tradeSymbol,
         };
         setTradeData(singleTradeInfo);
       });
