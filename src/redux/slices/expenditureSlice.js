@@ -11,7 +11,7 @@ const initialState = {
 
 export const getAllExpenditures = createAsyncThunk(
   "expenditure/getAllExpenditures",
-  async (url,{ rejectWithValue }) => {
+  async (url, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const axiosConfig = {
       headers: {
@@ -32,7 +32,6 @@ export const createExpenditure = createAsyncThunk(
   "expenditure/createExpenditure",
   async (values, { rejectWithValue }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
-    console.log(userInfo.token)
     const axiosConfig = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,

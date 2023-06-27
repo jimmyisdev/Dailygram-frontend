@@ -22,7 +22,6 @@ const dashboardSlice = createSlice({
         state.list = catItem;
       })
       .addCase(getCat.rejected, (state, action) => {
-        console.log(action);
         state.error = action.error.message;
         state.isLoading = false;
       });

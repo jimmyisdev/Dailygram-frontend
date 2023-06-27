@@ -1,4 +1,5 @@
 import { Paper } from "@mui/material";
+import CryptoWatcher from "components/CryptoWatcher/CryptoWatcher";
 import PageHead from "components/PageHead/PageHead";
 import TextFormatter from "components/TextFormatter/TextFormatter";
 
@@ -7,7 +8,7 @@ export default function Tool() {
     <Paper
       sx={{
         width: "100vw",
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -16,6 +17,7 @@ export default function Tool() {
     >
       <PageHead pageTitle="Tool" />
       <TextFormatter />
+      <CryptoWatcher />
     </Paper>
   );
 }
