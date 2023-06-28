@@ -33,7 +33,6 @@ export default function SymbolInput() {
     let ifExist = allSymbolList.findIndex(
       (item) => item.symbol === search.toUpperCase()
     );
-    console.log(ifExist);
     if (ifExist > -1) {
       dispatch(selectSymbol(search));
       dispatch(disconnectSocket());
@@ -69,24 +68,40 @@ export default function SymbolInput() {
     return <div>is loading</div>;
   } else
     return (
-      <Stack ref={wrapperRef} className="search_area">
-        <TextField
-          id="currentSymbol"
-          placeholder="Trading Symbol"
-          onChange={(event) => setSearch(event.target.value)}
-          onClick={() => setDisplay(!display)}
-          value={search}
-        />
-        <Stack direction="row">
-          <Button disabled={connected} onClick={handleConnectBtn}>
-            Connect
-          </Button>
-          <Button disabled={!connected} onClick={handleDisconnectBtn}>
-            Disconnect
-          </Button>
-        </Stack>
-        {display && (
-          <Box sx={{ bgcolor: "rgba(255, 255, 255, 0.2)", padding: "5px" }}>
+      <Stack alignItems="center" ref={wrapperRef}>
+        <Box justifyContent="center">
+          <TextField
+            id="currentSymbol"
+            placeholder="Trading Symbol"
+            onChange={(event) => setSearch(event.target.value)}
+            onClick={() => setDisplay(!display)}
+            disabled={connected}
+            value={search}
+            sx={{
+              width: "400px",
+            }}
+          />
+          <Stack direction="row">
+            <Button disabled={connected} onClick={handleConnectBtn}>
+              Connect
+            </Button>
+            <Button disabled={!connected} onClick={handleDisconnectBtn}>
+              Disconnect
+            </Button>
+          </Stack>
+        </Box>
+        {display && !connected && (
+          <Stack
+            sx={{
+              bgcolor: "rgba(255, 255, 255, 0.2)",
+              padding: "5px",
+              width: "420px",
+              maxHeight: "500px",
+              overflow: "scroll",
+            }}
+            direction="row"
+            flexWrap="wrap"
+          >
             {!options.length && <span>No matched item</span>}
             {!!options.length &&
               options.map((val, i) => {
@@ -96,8 +111,11 @@ export default function SymbolInput() {
                     className="option"
                     key={i + val}
                     sx={{
-                      width: "100%",
+                      width: "135px",
+                      cursor: "pointer",
+                      textAlign: "center",
                       "&:hover": {
+                        fontWeight: "700",
                         color: "blue",
                       },
                     }}
@@ -106,7 +124,7 @@ export default function SymbolInput() {
                   </Stack>
                 );
               })}
-          </Box>
+          </Stack>
         )}
       </Stack>
     );

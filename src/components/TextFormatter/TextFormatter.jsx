@@ -1,13 +1,14 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
-
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import TextRotateVerticalIcon from "@mui/icons-material/TextRotateVertical";
 export default function TextFormatter() {
   const [openTool, setOpenTool] = useState(false);
   const [oneLine, setOneLine] = useState(
     "這是一個讓\n留言用詞 \n不會再受到審查\n的小工具"
   );
-  const [filler, setFiller] = useState("😀");
+  const [filler, setFiller] = useState("👍");
   const [porcessedText, setProcessedText] = useState([]);
   function reset() {
     setOneLine("");
@@ -34,12 +35,32 @@ export default function TextFormatter() {
     }
     return setProcessedText(newStruct);
   }
+  async function copy() {
+    if (porcessedText.length === 0) {
+      return;
+    }
+    let copiedText = porcessedText.reduce(
+      (accumulator, currentValue) => `${accumulator} \n` + currentValue,
+      ""
+    );
+    console.log(copiedText);
+    if ("clipboard" in navigator) {
+      await navigator.clipboard.writeText(copiedText);
+    } else {
+      document.execCommand("copy", true, copiedText);
+    }
+  }
+
   useEffect(() => {
     processText();
   }, []);
 
   return (
-    <Stack>
+    <Stack
+      sx={{
+        margin: "5px",
+      }}
+    >
       <Button onClick={() => setOpenTool(!openTool)}>
         <Typography>Text Formatter</Typography>
       </Button>
@@ -66,15 +87,24 @@ export default function TextFormatter() {
               onChange={(e) => setFiller(e.target.value)}
               value={filler}
             />
-            <Button
-              disabled={!!oneLine.length ? false : true}
-              onClick={processText}
-            >
-              Convert
-            </Button>
-            <Button onClick={reset}>
-              <CleaningServicesIcon />
-            </Button>
+            <Tooltip title="Convert text from horizontal to vertical" arrow>
+              <Button
+                disabled={!!oneLine.length ? false : true}
+                onClick={processText}
+              >
+                <TextRotateVerticalIcon />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Clear the text input field" arrow>
+              <Button onClick={reset}>
+                <CleaningServicesIcon />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Copy the formatted text" arrow>
+              <Button onClick={copy}>
+                <ContentCopyIcon />
+              </Button>
+            </Tooltip>
           </Stack>
         </Stack>
       )}

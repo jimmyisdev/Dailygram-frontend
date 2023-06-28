@@ -61,7 +61,7 @@ function SingleOrderBookContainer({ title, data }) {
                   width: "130px",
                 }}
               >
-                <Typography> {item[0]}</Typography>
+                <Typography>{item[0]}</Typography>
               </Stack>
               <Stack
                 sx={{
