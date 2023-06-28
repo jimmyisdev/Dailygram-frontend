@@ -60,7 +60,9 @@ const cryptoSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllSymbols.fulfilled, (state, action) => {
-        let allSymbolList = action.payload.map((item) => item.symbol);
+        let allSymbolList = action.payload.map((item) => ({
+          symbol: item.symbol,
+        }));
         state.allSymbolList = allSymbolList;
         state.isLoading = false;
       })

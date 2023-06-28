@@ -2,8 +2,10 @@ import { Button, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  disconnectSocket,
   getAllSymbols,
   marketDepthSocket,
+  selectSymbol,
   tradeSocket,
 } from "redux/slices/cryptoSlice";
 import SymbolInput from "./SymbolInput";
@@ -16,7 +18,11 @@ export default function CryptoWatcher() {
   const [tradeData, setTradeData] = useState(null);
   const [marketData, setMarketData] = useState(null);
   const { currentSymbol, connected } = useSelector((state) => state.crypto);
-
+  function handleCryptoWatcherBtn() {
+    setOpenTool(!openTool);
+    dispatch(disconnectSocket());
+    dispatch(selectSymbol(""));
+  }
   useEffect(() => {
     dispatch(getAllSymbols());
   }, [dispatch]);
@@ -52,7 +58,7 @@ export default function CryptoWatcher() {
 
   return (
     <Stack>
-      <Button onClick={() => setOpenTool(!openTool)}>
+      <Button onClick={handleCryptoWatcherBtn}>
         <Typography>Crypto Watcher</Typography>
       </Button>
       {openTool && (

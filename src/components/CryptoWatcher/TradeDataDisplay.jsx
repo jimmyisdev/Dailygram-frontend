@@ -1,7 +1,5 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 export default function TradeDataDisplay({ data }) {
   const {
@@ -40,72 +38,74 @@ export default function TradeDataDisplay({ data }) {
         />
         {currentTradeSymbol} - Last Trade Record
       </Typography>
-      <Stack direction="row">
-        <Stack
-          sx={{
-            width: "150px",
-          }}
-        >
-          <Typography variant="h5">Last Price</Typography>
-        </Stack>
-        <Stack
-          sx={{
-            width: "150px",
-          }}
-        >
-          <Typography variant="h5">Last Quantity</Typography>
-        </Stack>
-        <Stack
-          sx={{
-            width: "150px",
-          }}
-        >
-          <Typography variant="h5">Trade Time</Typography>
-        </Stack>
-      </Stack>
-      <Divider />
-      <Stack direction="row">
-        <Stack
-          direction="row"
-          sx={{
-            width: "150px",
-          }}
-        >
-          <Typography
+      <Box sx={{ bgcolor: "rgba(255, 255, 255, 0.2)", padding: "5px" }}>
+        <Stack direction="row">
+          <Stack
             sx={{
-              color: currentPrice > lastPrice ? "#2C440D" : "#A50321",
-              fontWidth: "800",
+              width: "150px",
             }}
-            variant="span"
           >
-            {currentPrice}
-          </Typography>
-        </Stack>
-        <Stack
-          direction="row"
-          sx={{
-            width: "150px",
-          }}
-        >
-          <Typography
+            <Typography variant="h5">Trade Time</Typography>
+          </Stack>
+          <Stack
             sx={{
-              color: currentQty > lastQty ? "#2C440D" : "#A50321",
-              fontWidth: "800",
+              width: "150px",
             }}
-            variant="span"
           >
-            {currentQty}
-          </Typography>
+            <Typography variant="h5">Last Price</Typography>
+          </Stack>
+          <Stack
+            sx={{
+              width: "150px",
+            }}
+          >
+            <Typography variant="h5">Last Quantity</Typography>
+          </Stack>
         </Stack>
-        <Stack
-          direction="row"
-          sx={{
-            width: "150px",
-          }}
-        >
-          <Typography variant="span">{currentTradeTime}</Typography>
+        <Divider />
+        <Stack direction="row">
+          <Stack
+            direction="row"
+            sx={{
+              width: "150px",
+            }}
+          >
+            <Typography variant="span">{currentTradeTime}</Typography>
+          </Stack>
+          <Stack
+            direction="row"
+            sx={{
+              width: "150px",
+            }}
+          >
+            <Typography
+              sx={{
+                color: currentPrice > lastPrice ? "#2C440D" : "#A50321",
+                fontWidth: "800",
+              }}
+              variant="span"
+            >
+              {currentPrice}
+            </Typography>
+          </Stack>
+          <Stack
+            direction="row"
+            sx={{
+              width: "150px",
+            }}
+          >
+            <Typography
+              sx={{
+                color: currentQty > lastQty ? "#2C440D" : "#A50321",
+                fontWidth: "800",
+              }}
+              variant="span"
+            >
+              {currentQty}
+            </Typography>
+          </Stack>
         </Stack>
-      </Stack>
+      </Box>
     </Stack>
   );
 }

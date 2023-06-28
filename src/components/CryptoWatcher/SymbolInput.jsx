@@ -1,4 +1,4 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack, TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -11,16 +11,15 @@ import {
 export default function SymbolInput() {
   const dispatch = useDispatch();
   const wrapperRef = useRef(null);
-
   const [search, setSearch] = useState("");
   const [options, setOptions] = useState([]);
   const [display, setDisplay] = useState(false);
-  const { allSymbolList, currentSymbol, connected } = useSelector(
-    (state) => state.crypto
-  );
+  const { allSymbolList, connected } = useSelector((state) => state.crypto);
 
-  function handleAddSymbol(symbol) {
-    dispatch(selectSymbol({ symbol }));
+  function handleSymbolOption(symbol) {
+    setSearch(symbol);
+    dispatch(selectSymbol(symbol));
+    dispatch(connectSocket());
     setDisplay(false);
   }
 
@@ -31,13 +30,34 @@ export default function SymbolInput() {
     }
   }
   function handleConnectBtn() {
-    dispatch(disconnectSocket());
-    dispatch(connectSocket());
+    let ifExist = allSymbolList.findIndex(
+      (item) => item.symbol === search.toUpperCase()
+    );
+    console.log(ifExist);
+    if (ifExist > -1) {
+      dispatch(selectSymbol(search));
+      dispatch(disconnectSocket());
+      dispatch(connectSocket());
+    }
   }
   function handleDisconnectBtn() {
-    dispatch(selectSymbol({}));
+    setSearch("");
+    setOptions([]);
+    dispatch(selectSymbol(""));
     dispatch(disconnectSocket());
   }
+  useEffect(() => {
+    if (search.length >= 3) {
+      let currentSearch = search.toUpperCase();
+      let currentAutoSymbols = [];
+      currentAutoSymbols = allSymbolList.filter(
+        ({ symbol }) => symbol.indexOf(currentSearch) > -1
+      );
+      setOptions(currentAutoSymbols);
+    }
+    return setDisplay(false);
+  }, [search, allSymbolList]);
+
   useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -52,8 +72,10 @@ export default function SymbolInput() {
       <Stack ref={wrapperRef} className="search_area">
         <TextField
           id="currentSymbol"
-          label="Trading Symbol"
-          onChange={(e) => dispatch(selectSymbol(e.target.value))}
+          placeholder="Trading Symbol"
+          onChange={(event) => setSearch(event.target.value)}
+          onClick={() => setDisplay(!display)}
+          value={search}
         />
         <Stack direction="row">
           <Button disabled={connected} onClick={handleConnectBtn}>
@@ -64,21 +86,27 @@ export default function SymbolInput() {
           </Button>
         </Stack>
         {display && (
-          <div className="autoContainer">
+          <Box sx={{ bgcolor: "rgba(255, 255, 255, 0.2)", padding: "5px" }}>
             {!options.length && <span>No matched item</span>}
             {!!options.length &&
               options.map((val, i) => {
                 return (
-                  <div
-                    onClick={() => handleAddSymbol(val)}
+                  <Stack
+                    onClick={() => handleSymbolOption(val.symbol)}
                     className="option"
                     key={i + val}
+                    sx={{
+                      width: "100%",
+                      "&:hover": {
+                        color: "blue",
+                      },
+                    }}
                   >
-                    <span>{val}</span>
-                  </div>
+                    <span>{val.symbol}</span>
+                  </Stack>
                 );
               })}
-          </div>
+          </Box>
         )}
       </Stack>
     );
